@@ -5,6 +5,9 @@ import {
 
 import Track from './track';
 import ThemeProvider from './themeProvider';
+import SpotifyLoginView from './spotifyLoginView';
+
+import { fromJS } from 'immutable';
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -18,7 +21,12 @@ export default class App extends React.Component {
 					<AppBar
 						title="hearit.in" />
 
-					<Track />
+					<SpotifyLoginView />
+
+					<Track track={fromJS({
+						name: "Dirty Harry",
+						artistString: "Gorillaz"
+					})} />
 				</div>
 			</ThemeProvider>
 		</div>

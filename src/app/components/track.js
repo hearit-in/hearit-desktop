@@ -1,13 +1,5 @@
 import React, {PropTypes} from 'react';
 
-const TrackTitle = (props) =>
-	<span
-		style={{
-			fontSize: "2.2em"
-		}}>
-		{ props.title }
-	</span>
-
 export default class Track extends React.Component {
 	constructor(props) {
 		super(props);
@@ -15,12 +7,25 @@ export default class Track extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<TrackTitle title="Test" />
+			<div style={{
+				margin: "20px auto",
+				textAlign: "center"
+			}}>
+				<div>
+					<span style={{ fontSize: "2.2em", color: "#fff" }}>
+						{ this.props.track.get("name") }
+					</span>
+				</div>
+				<div>
+					<span style={{ fontSize: "1.5em", color: "#eee" }}>
+						{ this.props.track.get("artistString") }
+					</span>
+				</div>
 			</div>
 		);
 	}
 }
 
 Track.propTypes = {
+	track: PropTypes.object
 };
