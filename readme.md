@@ -1,7 +1,6 @@
 # hearit-desktop
 
-> My rad app
-
+Official desktop player for [hearit](http://hearit.in/)
 
 ## Dev
 
