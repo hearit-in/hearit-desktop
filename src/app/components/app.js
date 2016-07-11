@@ -1,36 +1,64 @@
 import React, {PropTypes} from 'react';
-import {
-	AppBar
-} from 'material-ui';
 
-import Track from './track';
-import ThemeProvider from './themeProvider';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import MainView from './mainView';
 import SpotifyLoginView from './spotifyLoginView';
+import SelectRoomView from './selectRoomView';
+import PlayerView from './playerView';
+import * as player from '../ipc/playerInterface';
+import PlayerStateProvider from './playerStateProvider';
 
-import { fromJS } from 'immutable';
 
+// Bootstrapping component
 export default class App extends React.Component {
 	constructor(props) {
 		super(props);
+		
+		this.state = {
+			roomId: "dank",
+			playerState: undefined
+		};
 	}
-
+	
+	getChildContext() {
+		return {
+			roomId: this.state.roomId
+		}
+	}
+	
+	componentDidMount() {
+		player.on("status", setPlayerState);
+	}
+	
+	componentWillUnmount() {
+		player.off("status", setPlayerState)
+	}
+	
+	setPlayerState(playerState) {
+		debugger;
+		this.setState({ playerState });
+	}
+	
+	setRoomId(roomId) {
+		this.setState({ roomId });
+	}
+	
 	render() {
-		return <div>
-			<ThemeProvider>
-				<div>
-					<AppBar
-						title="hearit.in" />
-
-					<SpotifyLoginView />
-
-					<Track track={fromJS({
-						name: "Dirty Harry",
-						artistString: "Gorillaz"
-					})} />
-				</div>
-			</ThemeProvider>
-		</div>
+		return (
+			<PlayerStateProvider playerState={this.state.playerState}>
+				<Router history={browserHistory}>
+					<Route path="/" component={MainView}>
+						<IndexRoute component={SelectRoomView} />
+						<Route path="/player" component={PlayerView} />
+					</Route>
+				</Router>
+			</PlayerStateProvider>
+		);
 	}
+}
+
+App.childContextTypes = {
+	roomId: PropTypes.string
 }
 
 App.propTypes = {

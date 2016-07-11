@@ -9,6 +9,7 @@ module.exports = {
 	output: {
 		filename: path.join(__dirname, "dist", "app", "bundle.js")
 	},
+	devtool: "source-map",
 	module: {
 		loaders: [
 			{

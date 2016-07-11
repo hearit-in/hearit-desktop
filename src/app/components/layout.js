@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-function MergeClassNames(baseClassName) {
+function mergeClassNames(baseClassName) {
 	return (ComposedComponent) => class extends React.Component {
 		constructor(props) {
 			super(props);
@@ -24,9 +24,9 @@ function MergeClassNames(baseClassName) {
 	}
 }
 
-export const Container = MergeClassNames("container")("div");
+export const Container = mergeClassNames("container")("div");
 
-export const Row = MergeClassNames("row")("div");
+export const Row = mergeClassNames("row")("div");
 
 export class Col extends React.Component {
 	classNameFromProperty(classPrefix, propertyValue) {

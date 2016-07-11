@@ -1,12 +1,23 @@
-import { Decoder as LameDecoder } from 'lame';
-import Spotify from 'spotify-web';
+const { SpotifyWebHelper } = require('node-spotify-webhelper');
+const express = require("express");
 
-export default class Player {
-	constructor(spotify) {
-		this.spotify = spotify;
+class Player {
+	constructor() {
+		this.spotify = new SpotifyWebHelper();
 	}
 
 	play(uri) {
-
+		
 	}
 }
+
+const router = new express.Router();
+
+router.get("/", (req, res) => {
+	res.json({ "oh shit": "whaddup?" });
+});
+
+module.exports = {
+	Player,
+	router
+};
