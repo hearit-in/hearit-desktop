@@ -32,11 +32,11 @@ export default class App extends React.Component {
 						}}
 						style={{
 							height: 36,
-							borderTopLeftRadius: "3px",
-							borderTopRightRadius: "3px",
+							borderTopLeftRadius: 5,
+							borderTopRightRadius: 5,
 							background: "rgba(35, 35, 50, 1)",
 							boxShadow: `
-								inset 0px 0px 1px rgba(255, 255, 255, 0.1),
+								inset 0px 0px 1px rgba(255, 255, 255, 0.15),
 								inset 0px -3px 3px rgba(40, 40, 60, 0.02)
 							`
 						}}>

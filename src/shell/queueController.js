@@ -40,17 +40,24 @@ function sortQueueByVotes(a, b) {
 
 function QueueController(roomId) {
 	this.spotify = new SpotifyWebHelper();
-	this.ref = firebase("rooms/dank/queue");
+	this.roomRef = firebase("rooms/dank")
+	this.ref = this.roomRef.child("queue");
+	this.nowPlayingRef = this.roomRef.child("nowPlaying");
 	this.queue = new List();
 	this._isListening = false;
 	
 	this._ipcEvents = {
 		"player:ready": () => {
 			
+		},
+		"player:play": (param) => {
+			this.nowPlayingRef.set({})
 		}
 	};
 	
 }
+
+QueueController.prototype.
 
 QueueController.prototype.start = function() {
 	this._listen();
