@@ -22,7 +22,8 @@ const muiTheme = getMuiTheme(rawTheme);
 
 class ThemeProvider extends React.Component {
 	render() {
-		return <MuiThemeProvider muiTheme={muiTheme}>{this.props.children}</MuiThemeProvider>;
+		return <MuiThemeProvider muiTheme={muiTheme}>{this.props.children}</MuiThemeProvider>
 	}
 }
+
 export default ThemeProvider;
