@@ -5,7 +5,7 @@ const app = electron.app;
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
 
-const player = require("./player");
+const Player = require("./player");
 const server = require("./server");
 const config = require("./cfg");
 
@@ -27,7 +27,11 @@ function createMainWindow() {
 		show: true
 	});
 	
+	let player = new Player(win.webContents);
+	player.listen();
+	
 	win.on('ready-to-show', () => { win.show() });
+	
 	
 	server.listen(config.serverPort, () => {
 		win.loadURL(`http://${config.serverHost}:${config.serverPort}/`);
