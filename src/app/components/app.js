@@ -15,8 +15,7 @@ export default class App extends React.Component {
 		super(props);
 		
 		this.state = {
-			roomId: "dank",
-			playerState: undefined
+			roomId: "dank"
 		};
 	}
 	
@@ -27,16 +26,9 @@ export default class App extends React.Component {
 	}
 	
 	componentDidMount() {
-		player.on("status", setPlayerState);
 	}
 	
 	componentWillUnmount() {
-		player.off("status", setPlayerState)
-	}
-	
-	setPlayerState(playerState) {
-		debugger;
-		this.setState({ playerState });
 	}
 	
 	setRoomId(roomId) {
