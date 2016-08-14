@@ -13,7 +13,5 @@ export const app = firebase.initializeApp({
 });
 
 export const db = app.database();
-
 export const createFirebase = (node) => db.ref(node || "/");
-
 export const firebaseForRoomId = (roomId) => createFirebase(`rooms/${roomId}`);
