@@ -2,6 +2,8 @@ import config from '../config';
 
 require("firebase");
 
+//firebase.database.enableLogging(true);
+
 export const app = firebase.initializeApp({
 	databaseURL: config.firebaseURL,
 	apiKey: config.apiKey,
