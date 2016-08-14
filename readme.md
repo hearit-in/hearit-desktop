@@ -25,4 +25,4 @@ Builds the app for OS X, Linux, and Windows, using [electron-packager](https://g
 
 ## License
 
-MIT © [Sebastian Reinhard](http://hearit.in)
+MIT © [Sebastian Reinhard](https://github.com/sebbert)
