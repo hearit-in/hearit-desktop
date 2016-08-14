@@ -20,7 +20,6 @@ class SelectRoomView extends React.Component {
 	}
 	
 	loginButtonClicked() {
-		debugger;
 		this.context.router.push("/player");
 	}
 	
