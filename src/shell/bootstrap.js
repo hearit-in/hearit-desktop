@@ -23,8 +23,11 @@ function createMainWindow() {
 		width: 850,
 		height: 460,
 		autoHideMenuBar: true,
-		titleBarStyle: "hidden-inset"
+		titleBarStyle: "hidden-inset",
+		show: true
 	});
+	
+	win.on('ready-to-show', () => { win.show() });
 	
 	server.listen(config.serverPort, () => {
 		win.loadURL(`http://${config.serverHost}:${config.serverPort}/`);
