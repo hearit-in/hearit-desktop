@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 
-export default (key) => {
+export default (key, type) => {
+	type = (type === undefined) ? PropTypes.any : type;
+	
 	class Provider extends React.Component {
 		getChildContext() {
 			return {
@@ -14,7 +16,7 @@ export default (key) => {
 	}
 		
 	Provider.childContextTypes = {
-		[key]: PropTypes.any
+		[key]: type
 	};
 	
 	return Provider;
