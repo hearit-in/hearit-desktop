@@ -7,6 +7,8 @@ import { firebaseForRoomId } from '../firebase';
 
 import controllerProvider from './controllerProvider';
 
+import QueueController from '../firebase/queueController';
+
 import {
 	Card,
 	CardTitle,
@@ -35,6 +37,9 @@ export default class PlayerView extends React.Component {
 	componentDidMount() {
 		this.ref = firebaseForRoomId(this.context.roomId)
 			.child("nowPlaying");
+			
+		this.queueController = new QueueController("dank");
+		this.queueController.listen();
 		
 		this.ref.on("value", (snapshot) => {
 			this.setTrack(snapshot.val);
@@ -43,6 +48,7 @@ export default class PlayerView extends React.Component {
 	
 	componentWillUnmount() {
 		this.ref.off();
+		this.queueController.unlisten();
 	}
 	
 	setTrack(track) {
@@ -61,7 +67,7 @@ export default class PlayerView extends React.Component {
 				<div className="player-image-container">
 					<div
 						className="player-play-button"
-						onTouchTap={() => this.co.controller.resume()}>
+						onTouchTap={() => this.context.controller.resume()}>
 							<AvPlayArrow
 								color="white"
 								style={{
