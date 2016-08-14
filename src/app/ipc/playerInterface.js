@@ -24,6 +24,16 @@ export function beginFacebookAuthFlow(uid, token) {
 	ipc.send("player:beginFacebookAuthFlow");
 }
 
+export function requestStatus() {
+	return new Promise((resolve, reject) => {
+		once("status", (event, response) => {
+			resolve(response);
+		});
+		
+		ipc.send("player:requestStatus");
+	});
+}
+
 export function on(channel, fn) {
 	return ipc.on("player:" + channel, fn);
 }
