@@ -37,6 +37,10 @@ module.exports = {
 				to: "dist/index.js"
 			},
 			{
+				from: "./package.json",
+				to: "dist/package.json"
+			},
+			{
 				from: "./src/shell",
 				to: "./dist/shell"
 			}
