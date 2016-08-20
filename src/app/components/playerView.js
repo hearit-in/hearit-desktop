@@ -38,7 +38,7 @@ export default class PlayerView extends React.Component {
 		this.ref = firebaseForRoomId(this.context.roomId)
 			.child("nowPlaying");
 			
-		this.queueController = new QueueController("dank");
+		this.queueController = new QueueController(this.context.roomId);
 		this.queueController.listen();
 		
 		this.ref.on("value", (snapshot) => {
