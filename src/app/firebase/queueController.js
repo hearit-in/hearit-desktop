@@ -95,6 +95,9 @@ export default class QueueController {
 				
 				if(!this.doesCurrentTrackHaveId(trackId) || position == 0) {
 					this.playNext();
+					
+					setTimeout(() => this.requestStatus(), 3000);
+					return;
 				}
 				else {
 					player.resume();
