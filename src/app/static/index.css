@@ -27,77 +27,87 @@ body {
 	font-size: 0.8em;
 }
 
+.cardish, .cardish-white {
+	padding: 10px;
+}
+
 .cardish {
+	background: rgb(123, 31, 162);
+	color: white;
+}
+
+.cardish-white {
 	background: white;
+	color: rgb(123, 31, 162);
+}
+
+.player-container {
+	padding: 5px;
+	display: block;
+}
+
+.player {
+	margin: 30px auto 0px auto;
+	max-width: 600px;
+	border-radius: 5px;
+	display: block;
 	box-shadow:
 		-1px 0px 1px rgba(0, 0,0, 0.2),
 		0px 10px 25px rgba(0, 20, 40, 0.3);
 }
 
-.player {
-	display: flex;
-	margin: 80px;
-	flex-direction: row;
-	align-content: center;
-	align-items: stretch;
-	justify-content: center;
-	flex-wrap: nowrap;
-}
-
 .player-image-container {
-	flex-shrink: 2;
-		
+	display: block;
+	position: relative;
 }
 
 .player-image {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	width: 100%;
-	max-width: 420px;
 	box-shadow:
-		inset 0px 1px 2px rgba(255, 255, 255, 0.3),
-		0px 10px 25px rgba(0, 20, 40, 0.3);
-}
-
-.player-play-button {
-	position: absolute;
-	padding: 50px;
-	margin: 75px 70px;
-	border-radius: 500px;
-	background: rgba(0, 0, 0, 0.6);	
-	opacity: 0.7;
-	
-	transition-duration: 0.1s;
-	transition-property: background, opacity;
-	transition-timing-function: ease-in-out;
-	cursor: pointer;
-}
-
-.player-play-button:hover {
-	background: rgba(0, 0, 0, 0.8);
-	opacity: 1;
-}
-
-.player-play-button.inactive {
-	opacity: 0;
-	cursor: default;
+		inset 0px 1px 2px rgba(0,0,0, 0.3);
 }
 
 .player-info {
-	flex-basis: 550px;
-	padding: auto;
-	padding-left: 30px;
-	flex-shrink: 0;
-	flex-grow: 1;
+	padding: 25px 15px;
 }
 
 .player-info-name {
 	display: block;
-	color: #555;
-	font-size: 3.5em;
+	color: #fff;
+	font-size: 2.7em;
 	margin-bottom: 20px;
 }
 
 .player-info-artist {
 	display: block;
-	color: #aaa;
+	color: #eee;
 	font-size: 1.7em;
+}
+
+.player-play-button {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+
+	background: white;
+	transform: scale(1);
+	transform-origin: top;
+
+	box-shadow: 0px 0px 0px rgba(0,0,0,.2);
+
+	transition-property: background, box-shadow;
+	transition-duration: 0.07s;
+	transition-timing-function: ease-in-out;
+}
+
+.player-play-button:hover {
+	cursor: pointer;
+	box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
+	background: #eee;
+}
+
+.player-play-button:active {
+	box-shadow: inset 3px 0px 7px rgba(0, 0, 0, 0.25);
+	color: #ccc
 }

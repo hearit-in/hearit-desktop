@@ -2,8 +2,10 @@
 const electron = require('electron');
 const app = electron.app;
 
+console.log(process.env.NODE_ENV);
 // adds debug features like hotkeys for triggering dev tools and reload
-require('electron-debug')();
+if(process.env.NODE_ENV == "debug")
+	require('electron-debug')();
 
 const Player = require("./player");
 const server = require("./server");
@@ -26,17 +28,17 @@ function createMainWindow() {
 		titleBarStyle: "hidden-inset",
 		show: true
 	});
-	
+
 	let player = new Player(win.webContents);
 	player.listen();
-	
+
 	win.on('ready-to-show', () => { win.show() });
-	
-	
+
+
 	server.listen(config.serverPort, () => {
 		win.loadURL(`http://${config.serverHost}:${config.serverPort}/`);
 	});
-	
+
 	win.on('closed', onClosed);
 
 	return win;

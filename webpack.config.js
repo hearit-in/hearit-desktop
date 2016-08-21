@@ -4,7 +4,10 @@ var webpack = require("webpack");
 var path = require("path");
 var CopyPlugin = require("copy-webpack-plugin");
 
-module.exports = {
+var isProduction = process.env.npm_lifecycle_event == "build";
+var isDevelopment = !isProduction;
+
+var config = {
 	entry: "./src/app/entry.js",
 	output: {
 		filename: path.join(__dirname, "dist", "app", "bundle.js")
@@ -47,3 +50,19 @@ module.exports = {
 		])
 	]
 };
+
+if(isProduction) {
+	config.plugins = config.plugins.concat([
+	    new webpack.optimize.DedupePlugin(),
+	    new webpack.DefinePlugin({
+	        'process.env.NODE_ENV': '"production"'
+	    }),
+	    new webpack.optimize.UglifyJsPlugin(),
+	    new webpack.optimize.OccurenceOrderPlugin(),
+	    new webpack.optimize.AggressiveMergingPlugin(),
+	    new webpack.NoErrorsPlugin()
+	]);
+}
+
+
+module.exports = config;
