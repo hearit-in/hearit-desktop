@@ -5,6 +5,7 @@
   "description": "My rad app",
   "license": "MIT",
   "repository": "sebbert/hearit-desktop",
+  "main": "index.js",
   "author": {
     "name": "Sebastian Reinhard",
     "email": "sebastian@sebbert.me",
