@@ -37,14 +37,12 @@ export default class App extends React.Component {
 	
 	render() {
 		return (
-			<PlayerStateProvider playerState={this.state.playerState}>
-				<Router history={browserHistory}>
-					<Route path="/" component={MainView}>
-						<IndexRoute component={SelectRoomView} />
-						<Route path="/player" component={PlayerView} />
-					</Route>
-				</Router>
-			</PlayerStateProvider>
+			<Router history={browserHistory}>
+				<Route path="/" component={MainView}>
+					<IndexRoute component={SelectRoomView} />
+					<Route path="/player" component={PlayerView} />
+				</Route>
+			</Router>
 		);
 	}
 }
