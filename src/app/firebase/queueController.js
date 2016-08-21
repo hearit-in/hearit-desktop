@@ -71,6 +71,9 @@ export default class QueueController {
 		this.nowPlayingRef.on("value", (snapshot) => {
 			if(snapshot.exists()) {
 				this.nowPlaying = snapshot.val();
+				if(!snapshot.exists)
+					this.nowPlaying = undefined;
+					
 				this.play(snapshot.val().providerId);
 			}
 		});
@@ -78,8 +81,15 @@ export default class QueueController {
 		this.isListening = true;
 		this.requestStatus();
 	}
+	
+	get hasNowPlaying() {
+		return this.nowPlaying !== undefined;
+	}
 
 	doesCurrentTrackHaveId(id) {
+		if(!this.hasNowPlaying) {
+			return false;
+		}
 		return this.nowPlaying.providerId == id;
 	}
 
@@ -92,28 +102,41 @@ export default class QueueController {
 		player.requestStatus()
 		.then((response) => {
 			let {err, status} = response;
+			
+			if(status === undefined) {
+				//TODO: Handle
+				return;
+			}
+			if(status && status.track) {
+				var trackId = status.track.track_resource.uri.split(":")[2];
+				var position = status.playing_position;
+			}
+			var isCurrentTrackNowPlaying = this.doesCurrentTrackHaveId(trackId);
 
-			var trackId = status.track.track_resource.uri.split(":")[2];
-			var position = status.playing_position;
-
-			// TODO: Clean up
-			if((!status.playing) && this.shouldPlay) {
-
-				if(!this.doesCurrentTrackHaveId(trackId)) {
+			
+			if(this.shouldPlay && !this.hasNowPlaying) {
+				this.playNext();
+			}
+			else if(status.playing) {
+				if(this.shouldPlay && !isCurrentTrackNowPlaying) {
 					this.play(this.nowPlaying.providerId);
 				}
-				else if(this.doesCurrentTrackHaveId(trackId) && position == 0) {
-					this.playNext();
-				}
-				else {
-					player.resume();
+				else if(!this.shouldPlay) {
+					player.pause();
 				}
 			}
-			else if(status.playing && this.shouldPlay && !this.doesCurrentTrackHaveId(trackId)) {
-				this.play(this.nowPlaying.providerId);
-			}
-			else if(status.playing && !this.shouldPlay) {
-				player.pause();
+			else {
+				if(this.shouldPlay) {
+					if(isCurrentTrackNowPlaying && position == 0) {
+						this.playNext();
+					}
+					else if(!this.doesCurrentTrackHaveId(trackId)) {
+						this.play(this.nowPlaying.providerId);
+					}
+					else {
+						player.resume();
+					}
+				}
 			}
 
 			if(this.isListening) {
