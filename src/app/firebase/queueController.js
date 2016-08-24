@@ -73,7 +73,7 @@ export default class QueueController {
 				this.nowPlaying = snapshot.val();
 				if(!snapshot.exists)
 					this.nowPlaying = undefined;
-					
+
 				this.play(snapshot.val().providerId);
 			}
 		});
@@ -81,7 +81,7 @@ export default class QueueController {
 		this.isListening = true;
 		this.requestStatus();
 	}
-	
+
 	get hasNowPlaying() {
 		return this.nowPlaying !== undefined;
 	}
@@ -102,9 +102,10 @@ export default class QueueController {
 		player.requestStatus()
 		.then((response) => {
 			let {err, status} = response;
-			
-			if(status === undefined) {
+
+			if(!status) {
 				//TODO: Handle
+				console.log(err);
 				return;
 			}
 			if(status && status.track) {
@@ -113,7 +114,7 @@ export default class QueueController {
 			}
 			var isCurrentTrackNowPlaying = this.doesCurrentTrackHaveId(trackId);
 
-			
+
 			if(this.shouldPlay && !this.hasNowPlaying) {
 				this.playNext();
 			}
