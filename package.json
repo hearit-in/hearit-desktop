@@ -13,13 +13,14 @@
   },
   "scripts": {
     "test": "xo",
-    "start": "electron dist",
+    "start": "webpack -w & electron dist",
+    "copy": "cp -R package.json src/index.js src/app/static/ dist",
     "clean": "npm run clean:webpack && clean:electron",
     "clean:webpack": "rimraf dist",
     "clean:electron": "rimraf app-dist",
-    "build": "npm run build:webpack & npm run build:electron",
+    "build": "npm run copy && npm run build:webpack && npm run build:electron",
     "build:webpack": "webpack",
-    "build:electron": "electron-packager dist --out=app-dist --overwrite --all"
+    "build:electron": "electron-packager dist --out=app-dist --overwrite --all --prune"
   },
   "files": [
     "index.js",
