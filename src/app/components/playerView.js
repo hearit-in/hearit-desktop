@@ -36,7 +36,7 @@ export default class PlayerView extends React.Component {
 
 		this.state = {
 			track: EmptyTrack,
-			shouldPlay: false
+			shouldPlay: true
 		};
 	}
 

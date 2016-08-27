@@ -40,7 +40,7 @@ export default class QueueController {
 		this.queueRef = this.roomRef.child("queue");
 		this.historyRef = this.roomRef.child("history");
 		this.nowPlayingRef = this.roomRef.child("nowPlaying");
-		this.shouldPlay = false;
+		this.shouldPlay = true;
 		this.nowPlaying = undefined;
 
 		this.queue = new List();

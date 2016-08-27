@@ -52,6 +52,6 @@ export class Col extends React.Component {
 	}
 
 	render() {
-		return <div className={this.getClassName()} {...this.props}>{this.props.children}</div>
+		return <div className={this.getClassName()}>{this.props.children}</div>
 	}
 }
