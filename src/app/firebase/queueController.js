@@ -73,8 +73,6 @@ export default class QueueController {
 				this.nowPlaying = snapshot.val();
 				if(!snapshot.exists)
 					this.nowPlaying = undefined;
-
-				this.play(snapshot.val().providerId);
 			}
 		});
 
