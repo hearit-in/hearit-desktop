@@ -13,14 +13,15 @@
   },
   "scripts": {
     "test": "xo",
-    "start": "webpack -w & electron dist",
-    "copy": "cp -R package.json src/index.js src/app/static/ dist",
-    "clean": "npm run clean:webpack && clean:electron",
-    "clean:webpack": "rimraf dist",
-    "clean:electron": "rimraf app-dist",
-    "build": "npm run copy && npm run build:webpack && npm run build:electron",
-    "build:webpack": "webpack",
-    "build:electron": "electron-packager dist --out=app-dist --overwrite --all --prune"
+    "start": "webpack -w & electron app",
+    "prebuild": "mkdir -p app",
+    "clean": "npm run clean:webpack && npm run clean:electron",
+    "clean:webpack": "rimraf app",
+    "clean:electron": "rimraf dist",
+    "build": "webpack",
+    "pack": "build --dir",
+    "dist": "npm run build && build",
+    "postinstall": "install-app-deps"
   },
   "files": [
     "index.js",
@@ -28,9 +29,19 @@
     "index.css"
   ],
   "keywords": [
-    "electron-app",
-    "electron"
+    "hearit",
+    "party",
+    "music"
   ],
+  "build": {
+      "appId": "in.hearit.player",
+      "category": "public.app-category.music",
+      "asar": false,
+      "mac": {
+        "icon": "src/icon.icns"
+      },
+      "files": "app"
+  },
   "dependencies": {
     "electron-debug": "^1.0.0",
     "electron-json-storage": "^2.0.0",
@@ -62,6 +73,7 @@
     "copy-webpack-plugin": "^3.0.0",
     "css-loader": "^0.23.1",
     "devtron": "^1.1.0",
+    "electron-builder": "^5.34.1",
     "electron-packager": "^7.0.0",
     "electron-prebuilt": "^1.0.1",
     "express": "^4.13.4",

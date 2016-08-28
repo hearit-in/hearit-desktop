@@ -22,6 +22,7 @@ function onClosed() {
 
 function createMainWindow() {
 	const win = new electron.BrowserWindow({
+		title: "Hearit Player",
 		width: 850,
 		height: 460,
 		autoHideMenuBar: true,

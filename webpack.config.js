@@ -10,7 +10,7 @@ var isDevelopment = !isProduction;
 var config = {
 	entry: "./src/app/entry.js",
 	output: {
-		filename: path.join(__dirname, "dist", "app", "bundle.js")
+		filename: path.join(__dirname, "app", "app", "bundle.js")
 	},
 	devtool: "source-map",
 	module: {
@@ -32,20 +32,20 @@ var config = {
 	plugins: [
 		new CopyPlugin([
 			{
-				from: "./src/app/static",
-				to: "dist/app"
+				from: "./src/app/static/",
+				to: "./app/app/"
 			},
 			{
 				from: "./src/index.js",
-				to: "dist/index.js"
-			},
-			{
-				from: "./package.json",
-				to: "dist/package.json"
+				to: "./app/index.js"
 			},
 			{
 				from: "./src/shell",
-				to: "./dist/shell"
+				to: "./app/shell"
+			},
+			{
+				from: "./src/icon.icns",
+				to: "./app/icon.icns"
 			}
 		])
 	]

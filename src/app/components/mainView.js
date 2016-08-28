@@ -21,7 +21,7 @@ export default class MainView extends React.Component {
 		return <div>
 			<ThemeProvider>
 				<div>
-					<AppBar
+					{/* <AppBar
 						showMenuIconButton={false}
 						title="hearit.in"
 						titleStyle={{
@@ -39,7 +39,7 @@ export default class MainView extends React.Component {
 								inset 0px -3px 3px rgba(40, 40, 60, 0.02)
 							`
 						}}>
-					</AppBar>
+					</AppBar> */}
 					
 					<div>{ this.props.children }</div>
 					

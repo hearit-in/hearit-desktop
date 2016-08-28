@@ -1,6 +1,6 @@
 node_modules/
-/dist
+/app
 npm-debug.log
 electron-packager/
 .DS_Store
-app-dist/
+app-build/
