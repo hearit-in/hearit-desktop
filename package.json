@@ -13,21 +13,16 @@
   },
   "scripts": {
     "test": "xo",
-    "start": "webpack -w & electron app",
-    "prebuild": "mkdir -p app",
+    "start": "electron app & webpack -w",
     "clean": "npm run clean:webpack && npm run clean:electron",
     "clean:webpack": "rimraf app",
     "clean:electron": "rimraf dist",
-    "build": "webpack",
-    "pack": "build --dir",
-    "dist": "npm run build && build",
+    "dist:webpack": "webpack",
+    "dist:electron": "build",
+    "dist:pack": "build --dir",
+    "dist": "npm run build:webpack && npm run dist:electron",
     "postinstall": "install-app-deps"
   },
-  "files": [
-    "index.js",
-    "index.html",
-    "index.css"
-  ],
   "keywords": [
     "hearit",
     "party",
@@ -40,7 +35,10 @@
       "mac": {
         "icon": "src/icon.icns"
       },
-      "files": "app"
+      "files": "app/**/*"
+  },
+  "directories": {
+    "app": "app"
   },
   "dependencies": {
     "electron-debug": "^1.0.0",
