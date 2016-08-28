@@ -15,7 +15,7 @@ export default (key, type) => {
 		}
 	}
 		
-	Provider.childContextTypes = {
+	Provider.childContextTypes = Provider.propTypes = {
 		[key]: type
 	};
 	

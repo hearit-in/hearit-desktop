@@ -20,6 +20,7 @@ class SelectRoomView extends React.Component {
 	}
 	
 	loginButtonClicked() {
+		this.context.onRoomIdChanged(this.state.roomId);
 		this.context.router.push("/player");
 	}
 	
@@ -46,10 +47,12 @@ class SelectRoomView extends React.Component {
 }
 
 SelectRoomView.propTypes = {
+	onRoomIdChanged: PropTypes.func
 };
 
 SelectRoomView.contextTypes = {
-	router: PropTypes.object
+	router: PropTypes.object,
+	onRoomIdChanged: PropTypes.func
 }
 
 export default SelectRoomView;

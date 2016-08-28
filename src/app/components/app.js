@@ -7,6 +7,7 @@ import SelectRoomView from './selectRoomView';
 import PlayerView from './playerView';
 import * as player from '../ipc/playerInterface';
 import PlayerStateProvider from './playerStateProvider';
+import {RoomIdProvider, OnRoomIdChangedProvider} from './roomIdProvider';
 
 
 // Bootstrapping component
@@ -15,14 +16,8 @@ export default class App extends React.Component {
 		super(props);
 		
 		this.state = {
-			roomId: "dank"
+			roomId: undefined
 		};
-	}
-	
-	getChildContext() {
-		return {
-			roomId: this.state.roomId
-		}
 	}
 	
 	componentDidMount() {
@@ -37,12 +32,16 @@ export default class App extends React.Component {
 	
 	render() {
 		return (
-			<Router history={browserHistory}>
-				<Route path="/" component={MainView}>
-					<IndexRoute component={SelectRoomView} />
-					<Route path="/player" component={PlayerView} />
-				</Route>
-			</Router>
+			<RoomIdProvider roomId={this.state.roomId}>
+				<OnRoomIdChangedProvider onRoomIdChanged={roomId => this.setRoomId(roomId)}>
+				<Router history={browserHistory}>
+					<Route path="/" component={MainView}>
+						<IndexRoute component={SelectRoomView} />
+						<Route path="/player" component={PlayerView} />
+					</Route>
+				</Router>
+				</OnRoomIdChangedProvider>
+			</RoomIdProvider>
 		);
 	}
 }
