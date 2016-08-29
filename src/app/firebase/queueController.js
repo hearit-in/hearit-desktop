@@ -1,5 +1,8 @@
 "use strict";
 
+// Disclaimer: This is REALLY bad code.
+// Basically, we have two shared mutable states to keep in sync, all while (hopefully) not interruptig the music
+
 const _ = require("lodash");
 
 const { Map, List, fromJS } = require("immutable");
@@ -46,6 +49,7 @@ export default class QueueController {
 		this.queue = new List();
 
 		this.isListening = false;
+		this._ignoreNextStatus = false;
 	}
 
 	setShouldPlay(shouldPlay) {
@@ -71,6 +75,9 @@ export default class QueueController {
 		this.nowPlayingRef.on("value", (snapshot) => {
 			if(snapshot.exists()) {
 				this.nowPlaying = snapshot.val();
+				this.play(this.nowPlaying.providerId);
+				this.ignoreNextStatus();
+				
 				if(!snapshot.exists)
 					this.nowPlaying = undefined;
 			}
@@ -99,33 +106,35 @@ export default class QueueController {
 	requestStatus() {
 		player.requestStatus()
 		.then((response) => {
-			let {err, status} = response;
-
-			if(!status) {
-				//TODO: Handle
-				console.log(err);
-				return;
-			}
-			if(status && status.track) {
-				var trackId = status.track.track_resource.uri.split(":")[2];
-				var position = status.playing_position;
-			}
-			var isCurrentTrackNowPlaying = this.doesCurrentTrackHaveId(trackId);
-
-
-			if(this.shouldPlay && !this.hasNowPlaying) {
-				this.playNext();
-			}
-			else if(status.playing) {
-				if(this.shouldPlay && !isCurrentTrackNowPlaying) {
-					this.play(this.nowPlaying.providerId);
-				}
-				else if(!this.shouldPlay) {
-					player.pause();
-				}
+			// TODO: Refactor this mess
+			if(this._ignoreNextStatus) {
+				this._ignoreNextStatus = false;
 			}
 			else {
-				if(this.shouldPlay) {
+				let {err, status} = response;
+				
+				if(!status) {
+					//TODO: Handle
+					console.log(err);
+				}
+				if(status && status.track) {
+					var trackId = status.track.track_resource.uri.split(":")[2];
+					var position = status.playing_position;
+				}
+				var isCurrentTrackNowPlaying = this.doesCurrentTrackHaveId(trackId);
+
+				if(this.shouldPlay && !this.hasNowPlaying) {
+					this.playNext();
+				}
+				else if(status.playing) {
+					if(this.shouldPlay && !isCurrentTrackNowPlaying && this.hasNowPlaying) {
+						this.play(this.nowPlaying.providerId);
+					}
+					else if(!this.shouldPlay) {
+						player.pause();
+					}
+				}
+				else if(!status.playing && this.shouldPlay) {
 					if(isCurrentTrackNowPlaying && position == 0) {
 						this.playNext();
 					}
@@ -139,7 +148,7 @@ export default class QueueController {
 			}
 
 			if(this.isListening) {
-				setTimeout(() => this.requestStatus(), 1000);
+				setTimeout(() => this.requestStatus(), 500);
 			}
 		})
 	}
@@ -165,6 +174,10 @@ export default class QueueController {
 			.set(historyTrackJS);
 
 		this.nowPlayingRef.set(historyTrackJS);
+	}
+	
+	ignoreNextStatus() {
+		this._ignoreNextStatus = true;
 	}
 
 	play(spotifyId) {

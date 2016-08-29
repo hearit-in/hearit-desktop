@@ -13,14 +13,14 @@
   },
   "scripts": {
     "test": "xo",
-    "start": "electron app & webpack -w",
+    "start": "echo 'Remember to also start webpack -w' && electron app",
     "clean": "npm run clean:webpack && npm run clean:electron",
     "clean:webpack": "rimraf app",
     "clean:electron": "rimraf dist",
     "dist:webpack": "webpack",
     "dist:electron": "build",
     "dist:pack": "build --dir",
-    "dist": "npm run build:webpack && npm run dist:electron",
+    "dist": "npm run dist:webpack && npm run dist:electron",
     "postinstall": "install-app-deps"
   },
   "keywords": [
@@ -30,6 +30,7 @@
   ],
   "build": {
       "appId": "in.hearit.player",
+      "productName": "Hearit Player",
       "category": "public.app-category.music",
       "asar": false,
       "mac": {

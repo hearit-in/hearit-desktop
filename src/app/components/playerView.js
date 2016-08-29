@@ -57,6 +57,7 @@ export default class PlayerView extends React.Component {
 	componentWillUnmount() {
 		this.ref.off();
 		this.queueController.unlisten();
+		delete this.queueController;
 	}
 
 	setTrack(track) {
@@ -89,21 +90,22 @@ export default class PlayerView extends React.Component {
 		return (
 			<div className="player-container">
 				<div className="player" >
-					<div className="player-image-container">
-						<img src={track.images[0].url} className="player-image" />
-					</div>
+					<img src={track.images[0].url} className="player-image" />
 
-					<div className="player-info cardish">
-						<span className="player-info-name">{track.name}</span>
-						<span className="player-info-artist">{track.artistString}</span>
+					<div className="player-right">
+						<div className="player-info">
+							<span className="player-info-name">{track.name}</span>
+							<span className="player-info-artist">{track.artistString}</span>
+						</div>
 					</div>
-					<div className="cardish-white player-play-button" onClick={() => this.toggleShouldPlay()}>
-						<iconClass className="player-play-button-icon"  />
-						{ this.state.shouldPlay
-							? <AvPause style={iconStyle} />
-							: <AvPlayArrow style={iconStyle} />
-						}
-					</div>
+				</div>
+				
+				<div className="player-play-button" onClick={() => this.toggleShouldPlay()}>
+					<iconClass className="player-play-button-icon"  />
+					{ this.state.shouldPlay
+						? <AvPause style={iconStyle} />
+						: <AvPlayArrow style={iconStyle} />
+					}
 				</div>
 			</div>
 		);

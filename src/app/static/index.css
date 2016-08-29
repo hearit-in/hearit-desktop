@@ -1,11 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
 
 body {
-	background-image: url("images/background-dark.png");
-	background-position: center;
+	background: #151623;
 	-webkit-user-select: none;
 	font-family: "Roboto";
-	padding-top: 50px;
+	margin-top: 80px;
 }
 
 .top-margin {
@@ -44,57 +43,89 @@ body {
 
 .player-container {
 	padding: 5px;
-	display: block;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	
+	align-items: center;
 }
 
 .player {
-	margin: 30px auto 0px auto;
-	max-width: 500px;
-	min-height: 300px;
+	min-height: 500px;
 	border-radius: 5px;
 	display: block;
-	box-shadow:
-		-1px 0px 1px rgba(0, 0,0, 0.2),
-		0px 10px 25px rgba(0, 20, 40, 0.3);
 }
 
 .player-image-container {
-	display: block;
-	position: relative;
 }
 
 .player-image {
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	width: 100%;
+	display: inline-block;
+	float: left;
+	border-radius: 5px;
+	width: 500px;
 	box-shadow:
-		inset 0px 1px 2px rgba(0,0,0, 0.3);
+		0px 0px 2px rgba(0, 0,0, 0.2),
+		0px 5px 6px rgba(0, 20, 40, 0.4);
+}
+
+.player-right {
+	padding-left: 30px;
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	height: 500px;
+	min-width: 400px;
+	width: 600px;
 }
 
 .player-info {
-	padding: 25px 15px;
+	font-size: 15px;
+	align-self: flex-start;
+}
+
+@media screen and (max-width: 1100px) {
+	.player-image {
+		width: 300px;
+	}
+	
+	.player-right {
+		width: 500px;
+	}
+	
+	.player-info {
+		font-size: 9px;
+	}
 }
 
 .player-info-name {
 	display: block;
 	color: #fff;
 	font-size: 2.7em;
-	margin-bottom: 20px;
+	font-weight: 200;
 }
 
 .player-info-artist {
 	display: block;
 	color: #eee;
+	font-weight: 100;
 	font-size: 1.7em;
 }
 
 .player-play-button {
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
+	border-radius: 200px;
 
 	background: white;
-	transform: scale(1);
-	transform-origin: top;
+	margin: 0px auto;
+	
+	padding: 10px;
+	display: inline-block;
 
 	box-shadow: 0px 0px 0px rgba(0,0,0,.2);
 

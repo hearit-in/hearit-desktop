@@ -16,7 +16,7 @@ export default class App extends React.Component {
 		super(props);
 		
 		this.state = {
-			roomId: undefined
+			roomId: "dank"
 		};
 	}
 	

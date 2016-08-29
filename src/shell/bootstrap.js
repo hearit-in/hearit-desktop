@@ -27,6 +27,7 @@ function createMainWindow() {
 		height: 460,
 		autoHideMenuBar: true,
 		titleBarStyle: "hidden-inset",
+		frame: false,
 		show: true
 	});
 
