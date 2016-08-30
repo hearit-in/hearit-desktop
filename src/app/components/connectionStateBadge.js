@@ -15,11 +15,13 @@ export default class PlayerStateBadge extends React.Component {
 		player.on("status", (event, response) => {
 			var online =
 				   response.err == undefined
-				&& response != undefined
-				&& response.online;
+				&& response.status != undefined
+				&& response.status.online;
 			
 			this.setIsOnline(online);
 		});
+		
+		player.requestStatus();
 	}
 	
 	setIsOnline(online) {
@@ -31,12 +33,13 @@ export default class PlayerStateBadge extends React.Component {
 	}
 	
 	get labelText() {
-		return this.state.online ? "online" : "offline";
+		return this.state.online ? "SPOTIFY TILKOBLET" : "IKKE TILKOBLET, ÅPNE SPOTIFY FOR Å SPILLE MUSIKK";
 	}
 	
 	get labelStyle() {
 		return {
-			color: this.state.online ? "#0f0" : "#f00"
+			color: this.state.online ? "#27ae60" : "#c0392b",
+			fontSize: "10px"
 		};
 	}
 	

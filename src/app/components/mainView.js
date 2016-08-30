@@ -59,9 +59,13 @@ export default class MainView extends React.Component {
 					}}>
 						<span>Hearit Player</span>
 						
-						<ConnectionStateBadge style={{
-							float: "right"
-						}} />
+						<div style={{
+							float: "right",
+							marginRight: 10,
+							fontWeight: 200
+						}}>
+							<ConnectionStateBadge />
+						</div>
 					</div>
 					
 					<div>{ this.props.children }</div>
