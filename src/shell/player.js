@@ -59,6 +59,7 @@ class Player {
 	pollStatus() {
 		var fn = () => this.requestStatus()
 			.then(status => {
+				console.log(status);
 				return status;
 			}, (err) => {
 				console.error(err);

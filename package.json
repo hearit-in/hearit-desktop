@@ -13,32 +13,20 @@
   },
   "scripts": {
     "test": "xo",
-    "start": "echo 'Remember to also start webpack -w' && electron app",
-    "clean": "npm run clean:webpack && npm run clean:electron",
-    "clean:webpack": "rimraf app",
-    "clean:electron": "rimraf dist",
-    "dist:webpack": "webpack",
-    "dist:electron": "build",
-    "dist:simple": "electron-packager ./app --platform=darwin --arch=x64 --asar --prune",
-    "dist:pack": "build --dir",
-    "dist": "npm run dist:webpack && npm run dist:electron",
-    "postinstall": "install-app-deps"
+    "start": "electron build",
+    "clean": "npm run clean:build && npm run clean:dist",
+    "clean:build": "rimraf build",
+    "clean:dist": "rimraf dist",
+    "dist:webpack": "NODE_ENV=production webpack",
+    "dist:electron": "electron-packager ./build --platform=all --arch=x64 --prune --overwrite --out=dist",
+    "copy-dependencies": "cp -R node_modules build/node_modules",
+    "dist": "npm run dist:webpack && npm run dist:electron"
   },
   "keywords": [
     "hearit",
     "party",
     "music"
   ],
-  "build": {
-    "appId": "in.hearit.player",
-    "productName": "Hearit Player",
-    "category": "public.app-category.music",
-    "asar": false,
-    "mac": {
-      "icon": "src/icon.icns"
-    },
-    "files": "app"
-  },
   "dependencies": {
     "electron-debug": "^1.0.0",
     "electron-json-storage": "^2.0.0",
@@ -70,7 +58,6 @@
     "copy-webpack-plugin": "^3.0.0",
     "css-loader": "^0.23.1",
     "devtron": "^1.1.0",
-    "electron-builder": "^6.3.1",
     "electron-packager": "^7.0.0",
     "electron-prebuilt": "^1.0.1",
     "express": "^4.13.4",

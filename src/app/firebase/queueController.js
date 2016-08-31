@@ -113,9 +113,11 @@ export default class QueueController {
 			else {
 				let {err, status} = response;
 				
+				console.log(status);
+				
 				if(!status) {
 					//TODO: Handle
-					console.log(err);
+					console.error(err);
 				}
 				if(status && status.track) {
 					var trackId = status.track.track_resource.uri.split(":")[2];
@@ -135,7 +137,8 @@ export default class QueueController {
 					}
 				}
 				else if(!status.playing && this.shouldPlay) {
-					if(isCurrentTrackNowPlaying && position == 0) {
+					console.log({ position, isCurrentTrackNowPlaying, now: this.nowPlaying });
+					if(isCurrentTrackNowPlaying && (position == 0)) {
 						this.playNext();
 					}
 					else if(!this.doesCurrentTrackHaveId(trackId)) {
@@ -148,8 +151,11 @@ export default class QueueController {
 			}
 
 			if(this.isListening) {
-				setTimeout(() => this.requestStatus(), 500);
+				setTimeout(() => this.requestStatus(), 1000);
 			}
+		})
+		.catch(err => {
+			console.error(err);
 		})
 	}
 
@@ -159,6 +165,7 @@ export default class QueueController {
 	playNext() {
 		this.shouldPlay = true;
 
+		console.log(this.queue);
 		if(this.queue.size === 0) {
 			// TODO: Handle empty queue
 			return;

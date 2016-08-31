@@ -4,13 +4,15 @@ var webpack = require("webpack");
 var path = require("path");
 var CopyPlugin = require("copy-webpack-plugin");
 
-var isProduction = process.env.npm_lifecycle_event == "build";
+var isProduction = process.env.NODE_ENV === "production";
 var isDevelopment = !isProduction;
+
+const outFolder = path.join(__dirname, "build");
 
 var config = {
 	entry: "./src/app/entry.js",
 	output: {
-		filename: path.join(__dirname, "app", "app", "bundle.js")
+		filename: path.join(outFolder, "app", "bundle.js")
 	},
 	devtool: "source-map",
 	module: {
@@ -33,19 +35,23 @@ var config = {
 		new CopyPlugin([
 			{
 				from: "./src/app/static/",
-				to: "./app/app/"
-			},
-			{
-				from: "./src/index.js",
-				to: "./app/index.js"
+				to: path.join(outFolder, "app")
 			},
 			{
 				from: "./src/shell",
-				to: "./app/shell"
+				to: path.join(outFolder, "shell")
+			},
+			{
+				from: "./src/index.js",
+				to: path.join(outFolder, "index.js")
+			},
+			{
+				from: "./package.json",
+				to: path.join(outFolder, "package.json")
 			},
 			{
 				from: "./src/icon.icns",
-				to: "./app/icon.icns"
+				to: path.join(outFolder, "icon.icns")
 			}
 		])
 	]

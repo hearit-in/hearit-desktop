@@ -33,13 +33,13 @@ export default class PlayerStateBadge extends React.Component {
 	}
 	
 	get labelText() {
-		return this.state.online ? "SPOTIFY TILKOBLET" : "IKKE TILKOBLET, ÅPNE SPOTIFY FOR Å SPILLE MUSIKK";
+		return this.state.online ? "SPOTIFY TILKOBLET" : "KAN IKKE KOBLE TIL SPOTIFY";
 	}
 	
 	get labelStyle() {
 		return {
 			color: this.state.online ? "#27ae60" : "#c0392b",
-			fontSize: "10px"
+			fontSize: "12px"
 		};
 	}
 	

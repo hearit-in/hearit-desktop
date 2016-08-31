@@ -4,7 +4,7 @@ const app = electron.app;
 
 console.log(process.env.NODE_ENV);
 // adds debug features like hotkeys for triggering dev tools and reload
-if(process.env.NODE_ENV == "debug")
+if(process.env.NODE_ENV == "development")
 	require('electron-debug')();
 
 const Player = require("./player");
@@ -23,19 +23,23 @@ function onClosed() {
 function createMainWindow() {
 	const win = new electron.BrowserWindow({
 		title: "Hearit Player",
-		width: 850,
-		height: 460,
+		
+		center: true,
+		width: 1750,
+		height: 950,
+		
+		minWidth: 850,
+		minHeight: 700,
+		
+		backgroundColor: "#151623",
 		autoHideMenuBar: true,
 		titleBarStyle: "hidden-inset",
-		frame: false,
+		frame: true,
 		show: true
 	});
 
 	let player = new Player(win.webContents);
 	player.listen();
-
-	win.on('ready-to-show', () => { win.show() });
-
 
 	server.listen(config.serverPort, () => {
 		win.loadURL(`http://${config.serverHost}:${config.serverPort}/`);
@@ -47,9 +51,7 @@ function createMainWindow() {
 }
 
 app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
+	app.quit();
 });
 
 app.on('activate', () => {
