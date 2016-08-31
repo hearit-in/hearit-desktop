@@ -47,7 +47,6 @@ class Player {
 		_.forEach(this._ipcEvents, (fn, channel) => ipc.on(channel, fn));
 		
 		this.isListening = true;
-		//this.pollStatus();
 	}
 
 	unlisten() {
@@ -56,30 +55,10 @@ class Player {
 		this.isListening = false;
 	}
 	
-	pollStatus() {
-		var fn = () => this.requestStatus()
-			.then(status => {
-				console.log(status);
-				return status;
-			}, (err) => {
-				console.error(err);
-			})
-			.then(() => {
-				if(this.isListening)
-					setTimeout(fn);
-			});
-		
-		fn();
-	}
-	
 	requestStatus() {
 		console.log("Status was requested");
 		return new Promise((resolve, reject) => {
 			this.spotify.getStatus((err, status) => {
-				
-				console.log("Got status:");
-				console.dir(status, err);
-				
 				this.webContents.send("player:status", {status, err});
 				
 				if(err === undefined) {
