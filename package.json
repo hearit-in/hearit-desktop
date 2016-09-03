@@ -17,7 +17,7 @@
     "clean": "npm run clean:build && npm run clean:dist",
     "clean:build": "rimraf build",
     "clean:dist": "rimraf dist",
-    "dist:webpack": "NODE_ENV=production webpack",
+    "dist:webpack": "env NODE_ENV=production webpack",
     "dist:electron": "electron-packager ./build --platform=all --arch=x64 --prune --overwrite --out=dist",
     "copy-dependencies": "cp -R node_modules build/node_modules",
     "dist": "npm run dist:webpack && npm run dist:electron"
