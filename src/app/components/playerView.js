@@ -21,13 +21,13 @@ import {
 } from 'material-ui/svg-icons/';
 
 const EmptyTrack = {
-	name: "Ingenting :(",
+	name: "Har ikke noe å spille",
 	artist: "Sett på noe da for helvette",
 	album: "latterlig lite",
 	images: {
-		small: "/images/worlds.jpg",
-		medium: "/images/worlds.jpg",
-		large: "/images/worlds.jpg"
+		small: "/images/thumbs-down.gif",
+		medium: "/images/thumbs-down.gif",
+		large: "/images/thumbs-down.gif"
 	}
 };
 
