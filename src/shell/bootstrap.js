@@ -2,7 +2,7 @@
 const electron = require('electron');
 const app = electron.app;
 
-console.log(process.env.NODE_ENV);
+
 // adds debug features like hotkeys for triggering dev tools and reload
 if(process.env.NODE_ENV == "development")
 	require('electron-debug')();

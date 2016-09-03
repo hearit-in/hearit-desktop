@@ -56,7 +56,6 @@ class Player {
 	}
 	
 	requestStatus() {
-		console.log("Status was requested");
 		return new Promise((resolve, reject) => {
 			this.spotify.getStatus((err, status) => {
 				this.webContents.send("player:status", {status, err});

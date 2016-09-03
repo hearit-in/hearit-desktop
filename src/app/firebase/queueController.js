@@ -131,7 +131,6 @@ export default class QueueController {
 			}
 		}
 		else if(!status.playing && this.shouldPlay) {
-			//console.log({ position, isCurrentTrackNowPlaying, now: this.nowPlaying });
 			if(isCurrentTrackNowPlaying && (position === 0)) {
 				this.playNext();
 			}
@@ -169,8 +168,7 @@ export default class QueueController {
 	 */
 	playNext() {
 		this.shouldPlay = true;
-
-		console.log(this.queue);
+		
 		if(this.queue.size === 0) {
 			// TODO: Handle empty queue
 			return;
@@ -186,7 +184,6 @@ export default class QueueController {
 			.child(track.get("id"))
 			.set(historyTrackJS);
 			
-		console.log(historyTrackJS);
 
 		this.nowPlayingRef.set(historyTrackJS);
 	}
