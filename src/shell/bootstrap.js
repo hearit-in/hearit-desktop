@@ -25,11 +25,11 @@ function createMainWindow() {
 		title: "Hearit Player",
 		
 		center: true,
-		width: 1750,
-		height: 950,
+		width: 1920,
+		height: 1080,
 		
 		minWidth: 850,
-		minHeight: 700,
+		minHeight: 500,
 		
 		backgroundColor: "#151623",
 		autoHideMenuBar: true,
