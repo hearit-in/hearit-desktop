@@ -52,6 +52,10 @@ var config = {
 			{
 				from: "./src/icon.icns",
 				to: path.join(outFolder, "icon.icns")
+			},
+			{
+				from: "./src/icon.ico",
+				to: path.join(outFolder, "icon.ico")
 			}
 		])
 	]
