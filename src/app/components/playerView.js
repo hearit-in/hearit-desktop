@@ -22,12 +22,13 @@ import {
 
 const EmptyTrack = {
 	name: "Ingenting :(",
-	artistString: "Sett på noe da for helvette",
-	images: [
-		{ url: "/images/worlds.jpg" },
-		{ url: "/images/worlds.jpg" },
-		{ url: "/images/worlds.jpg" }
-	]
+	artist: "Sett på noe da for helvette",
+	album: "latterlig lite",
+	images: {
+		small: "/images/worlds.jpg",
+		medium: "/images/worlds.jpg",
+		large: "/images/worlds.jpg"
+	}
 };
 
 export default class PlayerView extends React.Component {
@@ -90,12 +91,12 @@ export default class PlayerView extends React.Component {
 		return (
 			<div className="player-container">
 				<div className="player" >
-					<img src={track.images[0].url} className="player-image" />
+					<img src={track.images.large} className="player-image" />
 
 					<div className="player-right">
 						<div className="player-info">
 							<span className="player-info-name">{track.name}</span>
-							<span className="player-info-artist">{track.artistString}</span>
+							<span className="player-info-artist">{track.artist}</span>
 						</div>
 					</div>
 				</div>

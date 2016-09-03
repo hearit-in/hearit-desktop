@@ -18,7 +18,7 @@ export default class Track extends React.Component {
 				</div>
 				<div>
 					<span style={{ fontSize: "1.5em", color: "#eee" }}>
-						{ this.props.track.get("artistString") }
+						{ this.props.track.get("artist") }
 					</span>
 				</div>
 			</div>
