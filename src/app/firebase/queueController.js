@@ -49,7 +49,7 @@ export default class QueueController {
 		this.queue = new List();
 
 		this.isListening = false;
-		this._ignoreNextStatus = false;
+		this.numberOfStatusesToIgnore = 0;
 	}
 
 	setShouldPlay(shouldPlay) {
@@ -76,10 +76,9 @@ export default class QueueController {
 			if(snapshot.exists()) {
 				this.nowPlaying = snapshot.val();
 				this.play(this.nowPlaying.providerId);
-				this.ignoreNextStatus();
-				
-				if(!snapshot.exists)
-					this.nowPlaying = undefined;
+			}
+			else {
+				this.nowPlaying = undefined;
 			}
 		});
 
@@ -102,61 +101,67 @@ export default class QueueController {
 		this.queueRef.off();
 		this.isListening = false;
 	}
+	
+	handleStatusResponse(response) {
+		let {err, status} = response;
+		
+		if(!status) {
+			if(err) throw err;
+			else throw new Error("Server responded with neither status nor error");
+		}
+		else if(status.track && status.track.track_resource) {
+			var trackId = status.track.track_resource.uri.split(":")[2];
+			var position = status.playing_position;
+		}
+		else {
+			throw new Error("Invalid status: missing track");
+		}
+		
+		var isCurrentTrackNowPlaying = this.doesCurrentTrackHaveId(trackId);
+
+		if(this.shouldPlay && !this.hasNowPlaying) {
+			this.playNext();
+		}
+		else if(status.playing) {
+			if(this.shouldPlay && !isCurrentTrackNowPlaying && this.hasNowPlaying) {
+				this.play(this.nowPlaying.providerId);
+			}
+			else if(!this.shouldPlay) {
+				player.pause();
+			}
+		}
+		else if(!status.playing && this.shouldPlay) {
+			//console.log({ position, isCurrentTrackNowPlaying, now: this.nowPlaying });
+			if(isCurrentTrackNowPlaying && (position === 0)) {
+				this.playNext();
+			}
+			else if(!isCurrentTrackNowPlaying && (position !== 0)) {
+				this.play(this.nowPlaying.providerId);
+			}
+			else {
+				player.resume();
+			}
+		}
+	}
 
 	requestStatus() {
 		player.requestStatus()
-		.then((response) => {
-			// TODO: Refactor this mess
-			if(this._ignoreNextStatus) {
-				this._ignoreNextStatus = false;
-			}
-			else {
-				let {err, status} = response;
+			.then((response) => {
+				if(this.isListening) {
+					setTimeout(() => this.requestStatus(), 500);
+				}
 				
-				console.log(status);
-				
-				if(!status) {
-					//TODO: Handle
-					console.error(err);
+				// TODO: Refactor this mess
+				if(this.numberOfStatusesToIgnore > 0) {
+					this.numberOfStatusesToIgnore--;
 				}
-				if(status && status.track) {
-					var trackId = status.track.track_resource.uri.split(":")[2];
-					var position = status.playing_position;
+				else {
+					this.handleStatusResponse(response);
 				}
-				var isCurrentTrackNowPlaying = this.doesCurrentTrackHaveId(trackId);
-
-				if(this.shouldPlay && !this.hasNowPlaying) {
-					this.playNext();
-				}
-				else if(status.playing) {
-					if(this.shouldPlay && !isCurrentTrackNowPlaying && this.hasNowPlaying) {
-						this.play(this.nowPlaying.providerId);
-					}
-					else if(!this.shouldPlay) {
-						player.pause();
-					}
-				}
-				else if(!status.playing && this.shouldPlay) {
-					console.log({ position, isCurrentTrackNowPlaying, now: this.nowPlaying });
-					if(isCurrentTrackNowPlaying && (position == 0)) {
-						this.playNext();
-					}
-					else if(!this.doesCurrentTrackHaveId(trackId)) {
-						this.play(this.nowPlaying.providerId);
-					}
-					else {
-						player.resume();
-					}
-				}
-			}
-
-			if(this.isListening) {
-				setTimeout(() => this.requestStatus(), 1000);
-			}
-		})
-		.catch(err => {
-			console.error(err);
-		})
+			})
+			.catch(err => {
+				console.error(err);
+			})
 	}
 
 	/**
@@ -173,23 +178,26 @@ export default class QueueController {
 
 		let track = this.queue.get(0);
 		this.queueRef.child(track.get("id")).remove();
-		let historyTrack = track.set("playedAt", Firebase.database.ServerValue.TIMESTAMP);
-		let historyTrackJS = historyTrack.toJS();
+		let historyTrackJS = track.toJS();
+
+		historyTrackJS.playedAt = Firebase.database.ServerValue.TIMESTAMP;
 
 		this.historyRef
-			.child(historyTrack.get("id"))
+			.child(track.get("id"))
 			.set(historyTrackJS);
+			
+		console.log(historyTrackJS);
 
 		this.nowPlayingRef.set(historyTrackJS);
 	}
 	
-	ignoreNextStatus() {
-		this._ignoreNextStatus = true;
+	ignoreNextStatus(n) {
+		this.numberOfStatusesToIgnore += (n || 1);
 	}
 
 	play(spotifyId) {
 		player.play("spotify:track:" + spotifyId);
-		this.ignoreNextStatus();
+		this.ignoreNextStatus(2);
 	}
 
 }
