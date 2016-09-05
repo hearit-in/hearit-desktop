@@ -18,6 +18,7 @@ function onClosed() {
 	// dereference the window
 	// for multiple windows store them in an array
 	mainWindow = null;
+	app.quit();
 }
 
 function createMainWindow() {
