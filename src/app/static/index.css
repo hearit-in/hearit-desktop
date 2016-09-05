@@ -91,6 +91,21 @@ body {
 	align-self: flex-start;
 }
 
+.repeat-warning {
+	background-color: rgba(0,0,0, 0.5);
+	background-image: url(./images/repeat-warning.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	transition: opacity 0.5s ease;
+	
+	position: fixed;
+	left: 0;
+	top: 0;
+	right:0;
+	bottom:0;
+	z-index: 9000;
+}
+
 @media screen and (max-width: 1200px) {
 	.player {
 		min-height: 300px;
