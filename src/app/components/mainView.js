@@ -39,10 +39,8 @@ export default class MainView extends React.Component {
 						textAlign: "center",
 						background: "rgba(0, 0, 0, 0.5)"
 					}}>
-						{
-							platform == "osx" ?
-								<span>Hearit Player</span>
-							: null
+						{ platform !== "osx" ? null :
+							<span>Hearit Player</span>
 						}
 						
 						<div style={{
