@@ -195,6 +195,8 @@ export default class QueueController {
 	play(spotifyId) {
 		player.play("spotify:track:" + spotifyId);
 		this.ignoreNextStatus(2);
+		if('providerId' in this.nowPlaying)
+			this.nowPlaying.providerId = spotifyId;
 	}
 
 }
