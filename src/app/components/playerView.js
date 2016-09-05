@@ -29,6 +29,16 @@ const EmptyTrack = {
 	}
 };
 
+function DisableRepeatWarning(props) {
+	return <div
+		className="repeat-warning"
+		style={{
+			opacity: props.show ? 1 : 0,
+			pointerEvents: props.show ? "auto" : "none"
+		}}>
+	</div>
+}
+
 export default class PlayerView extends React.Component {
 	constructor(props) {
 		super(props);
@@ -95,17 +105,11 @@ export default class PlayerView extends React.Component {
 			margin: "0px auto"
 		};
 		
-		console.dir(this.state.playerStatus);
-		
 		let isOnRepeat = this.state.playerStatus && this.state.playerStatus.repeat;
 
 		return (
 			<div>
-				<div className="repeat-warning"
-					style={{
-						opacity: isOnRepeat ? 1 : 0
-					}}>
-				</div>
+				<DisableRepeatWarning show={isOnRepeat} />
 				<div className="player-container">
 					<div className="player" >
 						<img src={track.images.large} className="player-image" />
