@@ -20,7 +20,7 @@
     "dist": "npm run dist:webpack && npm run dist:dependencies && npm run dist:electron",
     "dist:webpack": "env NODE_ENV=production webpack",
 		"dist:dependencies": "copy-node-modules . ./build -v",
-    "dist:electron": "electron-packager ./build --platform=darwin,win32 --arch=x64 --asar --prune --overwrite --out=dist --icon=./build/icon"
+    "dist:electron": "electron-packager ./build --platform=darwin,win32,linux --arch=x64 --asar --prune --overwrite --out=dist --icon=./build/icon"
   },
   "keywords": [
     "hearit",
