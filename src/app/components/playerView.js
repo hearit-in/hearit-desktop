@@ -39,6 +39,7 @@ function DisableRepeatWarning(props) {
 	</div>
 }
 
+
 export default class PlayerView extends React.Component {
 	constructor(props) {
 		super(props);
@@ -110,6 +111,21 @@ export default class PlayerView extends React.Component {
 		return (
 			<div>
 				<DisableRepeatWarning show={isOnRepeat} />
+				
+				<div style={{
+					fontSize: "2.1em",
+					color: "#fff",
+					fontWeight: 100,
+					fontFamily: "Roboto",
+					textAlign: "center",
+					display: "block",
+					marginBottom: "40px"
+				}}>
+					Gå til <span style={{ color: "#9c27b0" }}>hearit.in</span> på mobilen din for å sette på musikk.
+					<br />
+					Koden er <span style={{ color: "#9c27b0" }}> { this.context.roomId }</span>
+				</div>
+				
 				<div className="player-container">
 					<div className="player" >
 						<img src={track.images.large} className="player-image" />
@@ -125,8 +141,8 @@ export default class PlayerView extends React.Component {
 					<div className="player-play-button" onClick={() => this.toggleShouldPlay()}>
 						<iconClass className="player-play-button-icon"  />
 						{ this.state.shouldPlay
-							? <AvPause style={iconStyle} />
-							: <AvPlayArrow style={iconStyle} />
+							? <AvPause style={iconStyle} color="#fff" />
+							: <AvPlayArrow style={iconStyle} color="#fff" />
 						}
 					</div>
 				</div>
